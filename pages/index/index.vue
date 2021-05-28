@@ -57,6 +57,9 @@
 				<u-tag text="寿险" type="info" shape="circle" />
 				<u-tag text="意外险" type="info" shape="circle" />
 			</view>
+			<view style="margin-top: 20rpx;">
+				<u-button @click="toLogin" type="primary">login</u-button>
+			</view>
 		</view>
 
 	</view>
@@ -105,6 +108,11 @@
 			selectTag() {
 				this.selectedTag = !(this.selectedTag)
 				console.log(this.selectedTag)
+			},
+			toLogin(){
+				uni.navigateTo({
+					url: "../login/login"
+				})
 			}
 		}
 	}
