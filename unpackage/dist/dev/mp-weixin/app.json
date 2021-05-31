@@ -4,7 +4,9 @@
     "pages/product/product",
     "pages/select/select",
     "pages/user/user",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/temp/temp",
+    "pages/share/share"
   ],
   "subPackages": [],
   "window": {
@@ -38,5 +40,13 @@
       }
     ]
   },
-  "usingComponents": {}
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将御用小程序位置接口的效果展示"
+    }
+  },
+  "usingComponents": {
+    "my-navbar": "/components/navbar"
+  },
+  "sitemapLocation": "sitemap.json"
 }

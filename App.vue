@@ -1,7 +1,13 @@
 <script>
 	export default {
 		onLaunch: function() {
-			console.log('App Launch')
+			uni.login({
+				success(res) {
+					console.log(res)
+				},fail(err){
+					console.log(err)
+				}
+			})
 		},
 		onShow: function() {
 			console.log('App Show')

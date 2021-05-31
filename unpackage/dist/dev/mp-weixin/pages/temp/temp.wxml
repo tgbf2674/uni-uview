@@ -1,0 +1,1 @@
+<view><view><my-navbar bind:goHome="__e" vue-id="80220f80-1" data-event-opts="{{[['^goHome',[['handleclick']]]]}}" bind:__l="__l"></my-navbar></view><text>hello</text></view>

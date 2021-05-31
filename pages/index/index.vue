@@ -1,13 +1,6 @@
 <template>
 	<view class="content">
-		<u-navbar :background="background" :is-back="false" title="本地宝">
-			<view class="slot-wrap">
-				<view class="right-icon">
-					<u-icon name="home"></u-icon>
-					<view>首页</view>
-				</view>
-			</view>
-		</u-navbar>
+		<my-navbar @goHome="goShare"></my-navbar>
 		<view class="swiper">
 			<u-swiper :list="list"></u-swiper>
 		</view>
@@ -52,13 +45,17 @@
 				<text class="text3">全部 ></text>
 			</view>
 			<view class="tags">
-				<u-tag :bgColor="selectedTag? 'blue' : '' " ref="uTags" @click="selectTag" index=1 text="重疾险" type="info" shape="circle" />
+				<u-tag :bgColor="selectedTag? 'blue' : '' " ref="uTags" @click="selectTag" index=1 text="重疾险"
+					type="info" shape="circle" />
 				<u-tag text="医疗险" type="info" shape="circle" />
 				<u-tag text="寿险" type="info" shape="circle" />
 				<u-tag text="意外险" type="info" shape="circle" />
 			</view>
 			<view style="margin-top: 20rpx;">
-				<u-button @click="toLogin" type="primary">login</u-button>
+				<u-button @click="" >	登录 </u-button>
+			</view>
+			<view style="margin-top: 20rpx;">
+				<u-button @click="goTemp">跳转 </u-button>
 			</view>
 		</view>
 
@@ -109,9 +106,20 @@
 				this.selectedTag = !(this.selectedTag)
 				console.log(this.selectedTag)
 			},
-			toLogin(){
+			getUser () {
+				uni.getUserProfile({
+					desc: '登录',
+					success: (res)=>{
+						console.log(res)
+					},
+					fail: (res)=>{
+						console.log(res)
+					}
+				})
+			},
+			goTemp(){
 				uni.navigateTo({
-					url: "../login/login"
+					url: "../temp/temp"
 				})
 			}
 		}
