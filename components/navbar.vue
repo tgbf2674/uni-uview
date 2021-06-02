@@ -1,5 +1,5 @@
 <template>
-	<u-navbar :background="background" :is-back="true" title="本地宝">
+	<u-navbar :background="background" back-icon-color="#fff" :is-back="true" title="本地宝" title-color="#fff">
 		<view class="slot-wrap">
 			<view @click="goHome" class="right-icon">
 				<u-icon name="home"></u-icon>
@@ -14,7 +14,7 @@
 		name:"navbar",
 		data() {
 			return {
-				
+				background: { backgroundImage: 'linear-gradient(45deg, rgb(28, 187, 180), rgb(141, 198, 63))'}
 			};
 		},
 		methods:{
@@ -32,6 +32,6 @@
 		align-items: center;
 		flex-direction: column;
 		margin-left: 40rpx;
-		border: 1px solid red
+		color: #FFFFFF;
 	}
 </style>

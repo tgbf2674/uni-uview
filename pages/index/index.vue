@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<my-navbar @goHome="goShare"></my-navbar>
+		<my-navbar @goHome="goHome"></my-navbar>
 		<view class="swiper">
 			<u-swiper :list="list"></u-swiper>
 		</view>
@@ -45,20 +45,52 @@
 				<text class="text3">全部 ></text>
 			</view>
 			<view class="tags">
-				<u-tag :bgColor="selectedTag? 'blue' : '' " ref="uTags" @click="selectTag" index=1 text="重疾险"
-					type="info" shape="circle" />
-				<u-tag text="医疗险" type="info" shape="circle" />
-				<u-tag text="寿险" type="info" shape="circle" />
-				<u-tag text="意外险" type="info" shape="circle" />
+				<scroll-view scroll-x="true">
+					<u-tag v-for="(item,index) in tagList" :key='item.code'
+						:bgColor="selectCode===item.code ? 'blue' : '' " @click="selectTag(index)" :text="item.name"
+						type="info" shape="circle" />
+				</scroll-view>
 			</view>
 			<view style="margin-top: 20rpx;">
-				<u-button @click="" >	登录 </u-button>
+				<u-button @click=""> 登录 </u-button>
 			</view>
 			<view style="margin-top: 20rpx;">
 				<u-button @click="goTemp">跳转 </u-button>
 			</view>
+			<view class="wrapper">
+				<view class="tabs-swiper">
+					<u-tabs-swiper ref="uTabs" :list="tabList" :current="current" @change="tabsChange" :is-scroll="true"
+						swiperWidth="750"></u-tabs-swiper>
+				</view>
+				<u-popup v-model="show" mode="center" width="500rpx" height="600px">
+					<view>
+						<view>
+							<text>青少年</text>
+						</view>
+						<view>老人</view>
+						<view>婴儿</view>
+					</view>
+				</u-popup>
+				<u-icon @click="show =true" name="list"></u-icon>
+			</view>
+			<swiper :current="swiperCurrent" @transition="transition" @animationfinish="animationfinish">
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 800rpx;width: 100%;">
+						111
+					</scroll-view>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 800rpx;width: 100%;">
+						222
+					</scroll-view>
+				</swiper-item>
+				<swiper-item class="swiper-item">
+					<scroll-view scroll-y style="height: 800rpx;width: 100%;">
+						333
+					</scroll-view>
+				</swiper-item>
+			</swiper>
 		</view>
-
 	</view>
 </template>
 
@@ -95,32 +127,98 @@
 					// 渐变色
 					backgroundImage: 'linear-gradient(45deg, rgb(28, 187, 180), rgb(141, 198, 63))'
 				},
-				selectedTag: true
+				selectedTag: true,
+				tagList: [{
+					code: "1",
+					name: '重疾险'
+				}, {
+					code: "2",
+					name: '医疗险'
+				}, {
+					code: "3",
+					name: '寿险'
+				}, {
+					code: "4",
+					name: '意外险'
+				}, {
+					code: "5",
+					name: '意外险'
+				}, {
+					code: "6",
+					name: '意外险'
+				}, {
+					code: "7",
+					name: '意外险'
+				}, ],
+				selectCode: '',
+				tabList: [{
+					name: '月排行榜'
+				}, {
+					name: '季排行榜'
+				}, {
+					name: '年排行榜'
+				}, {
+					name: '季排行榜'
+				}, {
+					name: '年排行榜'
+				}, {
+					name: '季排行榜'
+				}, {
+					name: '年排行榜'
+				}],
+				// 因为内部的滑动机制限制，请将tabs组件和swiper组件的current用不同变量赋值
+				current: 0, // tabs组件的current值，表示当前活动的tab选项
+				swiperCurrent: 0, // swiper组件的current值，表示当前那个swiper-item是活动的
+				show: false
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-			selectTag() {
-				this.selectedTag = !(this.selectedTag)
-				console.log(this.selectedTag)
+			selectTag(index) {
+				console.log(index)
+				if (this.selectCode !== this.tagList[index].code) {
+					this.selectCode = ""
+					this.selectCode = this.tagList[index].code
+				}
 			},
-			getUser () {
+			getUser() {
 				uni.getUserProfile({
 					desc: '登录',
-					success: (res)=>{
+					success: (res) => {
 						console.log(res)
 					},
-					fail: (res)=>{
+					fail: (res) => {
 						console.log(res)
 					}
 				})
 			},
-			goTemp(){
+			goTemp() {
 				uni.navigateTo({
 					url: "../temp/temp"
 				})
+			},
+			goHome() {
+				uni.switchTab({
+					url: "./index"
+				})
+			},
+			tabsChange(index) {
+				this.swiperCurrent = index;
+			},
+			// swiper-item左右移动，通知tabs的滑块跟随移动
+			transition(e) {
+				let dx = e.detail.dx;
+				this.$refs.uTabs.setDx(dx);
+			},
+			// 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
+			// swiper滑动结束，分别设置tabs和swiper的状态
+			animationfinish(e) {
+				let current = e.detail.current;
+				this.$refs.uTabs.setFinishCurrent(current);
+				this.swiperCurrent = current;
+				this.current = current;
 			}
 		}
 	}
@@ -208,7 +306,6 @@
 
 	.bottom-box {
 		border-radius: 8px;
-		height: 400rpx;
 		width: 100%;
 		box-shadow: 0px 4px 2px 0 rgba(0, 0, 0, 0.1);
 		padding: 20rpx;
@@ -241,9 +338,23 @@
 
 		.tags {
 			margin-top: 20rpx;
+			white-space: nowrap;
 
 			u-tag {
 				margin-right: 10px;
+			}
+		}
+
+		.wrapper {
+			display: flex;
+
+			.tabs-swiper {
+				width: 650rpx;
+			}
+
+			u-icon {
+				margin-left: 20rpx;
+				font-size: 30rpx;
 			}
 		}
 	}

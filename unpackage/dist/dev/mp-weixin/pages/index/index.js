@@ -118,6 +118,12 @@ try {
     },
     uButton: function() {
       return __webpack_require__.e(/*! import() | uview-ui/components/u-button/u-button */ "uview-ui/components/u-button/u-button").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-button/u-button.vue */ 142))
+    },
+    uTabsSwiper: function() {
+      return Promise.all(/*! import() | uview-ui/components/u-tabs-swiper/u-tabs-swiper */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uview-ui/components/u-tabs-swiper/u-tabs-swiper")]).then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-tabs-swiper/u-tabs-swiper.vue */ 149))
+    },
+    uPopup: function() {
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-popup/u-popup */ "uview-ui/components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-popup/u-popup.vue */ 183))
     }
   }
 } catch (e) {
@@ -141,6 +147,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.show = true
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -238,6 +249,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -271,16 +314,61 @@ var _default =
         // 渐变色
         backgroundImage: 'linear-gradient(45deg, rgb(28, 187, 180), rgb(141, 198, 63))' },
 
-      selectedTag: true };
+      selectedTag: true,
+      tagList: [{
+        code: "1",
+        name: '重疾险' },
+      {
+        code: "2",
+        name: '医疗险' },
+      {
+        code: "3",
+        name: '寿险' },
+      {
+        code: "4",
+        name: '意外险' },
+      {
+        code: "5",
+        name: '意外险' },
+      {
+        code: "6",
+        name: '意外险' },
+      {
+        code: "7",
+        name: '意外险' }],
+
+      selectCode: '',
+      tabList: [{
+        name: '月排行榜' },
+      {
+        name: '季排行榜' },
+      {
+        name: '年排行榜' },
+      {
+        name: '季排行榜' },
+      {
+        name: '年排行榜' },
+      {
+        name: '季排行榜' },
+      {
+        name: '年排行榜' }],
+
+      // 因为内部的滑动机制限制，请将tabs组件和swiper组件的current用不同变量赋值
+      current: 0, // tabs组件的current值，表示当前活动的tab选项
+      swiperCurrent: 0, // swiper组件的current值，表示当前那个swiper-item是活动的
+      show: false };
 
   },
   onLoad: function onLoad() {
 
   },
   methods: {
-    selectTag: function selectTag() {
-      this.selectedTag = !this.selectedTag;
-      console.log(this.selectedTag);
+    selectTag: function selectTag(index) {
+      console.log(index);
+      if (this.selectCode !== this.tagList[index].code) {
+        this.selectCode = "";
+        this.selectCode = this.tagList[index].code;
+      }
     },
     getUser: function getUser() {
       uni.getUserProfile({
@@ -297,6 +385,27 @@ var _default =
       uni.navigateTo({
         url: "../temp/temp" });
 
+    },
+    goHome: function goHome() {
+      uni.switchTab({
+        url: "./index" });
+
+    },
+    tabsChange: function tabsChange(index) {
+      this.swiperCurrent = index;
+    },
+    // swiper-item左右移动，通知tabs的滑块跟随移动
+    transition: function transition(e) {
+      var dx = e.detail.dx;
+      this.$refs.uTabs.setDx(dx);
+    },
+    // 由于swiper的内部机制问题，快速切换swiper不会触发dx的连续变化，需要在结束时重置状态
+    // swiper滑动结束，分别设置tabs和swiper的状态
+    animationfinish: function animationfinish(e) {
+      var current = e.detail.current;
+      this.$refs.uTabs.setFinishCurrent(current);
+      this.swiperCurrent = current;
+      this.current = current;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

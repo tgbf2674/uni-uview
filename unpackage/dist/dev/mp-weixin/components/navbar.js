@@ -80,7 +80,7 @@ var components
 try {
   components = {
     uNavbar: function() {
-      return __webpack_require__.e(/*! import() | uview-ui/components/u-navbar/u-navbar */ "uview-ui/components/u-navbar/u-navbar").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-navbar/u-navbar.vue */ 149))
+      return __webpack_require__.e(/*! import() | uview-ui/components/u-navbar/u-navbar */ "uview-ui/components/u-navbar/u-navbar").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-navbar/u-navbar.vue */ 156))
     },
     uIcon: function() {
       return __webpack_require__.e(/*! import() | uview-ui/components/u-icon/u-icon */ "uview-ui/components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/uview-ui/components/u-icon/u-icon.vue */ 114))
@@ -155,8 +155,8 @@ var _default =
 {
   name: "navbar",
   data: function data() {
-    return {};
-
+    return {
+      background: { backgroundImage: 'linear-gradient(45deg, rgb(28, 187, 180), rgb(141, 198, 63))' } };
 
   },
   methods: {

@@ -111,7 +111,6 @@
 }
 .bottom-box.data-v-57280228 {
   border-radius: 8px;
-  height: 400rpx;
   width: 100%;
   box-shadow: 0px 4px 2px 0 rgba(0, 0, 0, 0.1);
   padding: 20rpx;
@@ -146,8 +145,21 @@
 }
 .bottom-box .tags.data-v-57280228 {
   margin-top: 20rpx;
+  white-space: nowrap;
 }
 .bottom-box .tags u-tag.data-v-57280228 {
   margin-right: 10px;
+}
+.bottom-box .wrapper.data-v-57280228 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.bottom-box .wrapper .tabs-swiper.data-v-57280228 {
+  width: 650rpx;
+}
+.bottom-box .wrapper u-icon.data-v-57280228 {
+  margin-left: 20rpx;
+  font-size: 30rpx;
 }
 
